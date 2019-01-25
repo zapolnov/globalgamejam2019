@@ -9,13 +9,15 @@ public sealed class Player : MonoBehaviour
 
     public GroundDetector GroundDetector;
 
+    public Vector2 LastVelocity { get; private set; }
+    public Rigidbody2D Rigidbody { get; private set; }
+
     private Vector3 mStartPosition;
-    private Rigidbody2D mRigidbody;
     private bool mDragging;
 
     void Awake()
     {
-        mRigidbody = GetComponent<Rigidbody2D>();
+        Rigidbody = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -32,6 +34,9 @@ public sealed class Player : MonoBehaviour
             Vector3 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - mStartPosition;
             dir *= JumpScale;
             float length = dir.magnitude;
+            if (length == 0.0f)
+                return;
+
             if (length < MinJump) {
                 dir /= length;
                 dir *= MinJump;
@@ -39,8 +44,14 @@ public sealed class Player : MonoBehaviour
                 dir /= length;
                 dir *= MaxJump;
             }
+
             Debug.Log($"{dir.magnitude}");
-            mRigidbody.AddForce(dir);
+            Rigidbody.AddForce(dir);
         }
+    }
+
+    void FixedUpdate()
+    {
+        LastVelocity = Rigidbody.velocity;
     }
 }
