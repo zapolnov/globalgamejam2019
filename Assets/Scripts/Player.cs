@@ -8,11 +8,14 @@ public sealed class Player : MonoBehaviour
     public float JumpScale = 10.0f;
 
     public GroundDetector GroundDetector;
+    public GameObject BarSpawnPoint;
+    public GameObject BarPrefab;
 
     public Vector2 LastVelocity { get; private set; }
     public Rigidbody2D Rigidbody { get; private set; }
 
     private Vector3 mStartPosition;
+    private GameObject mCurrentBar;
     private bool mDragging;
 
     void Awake()
@@ -26,10 +29,19 @@ public sealed class Player : MonoBehaviour
             mStartPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (GroundDetector.IsOnGround)
                 mDragging = true;
+            else {
+                if (mCurrentBar != null)
+                    Destroy(mCurrentBar);
+                mCurrentBar = Instantiate(BarPrefab, BarSpawnPoint.transform.position, Quaternion.identity);
+                Rigidbody.velocity = new Vector2(0.0f, 0.0f);
+            }
         } else if (Input.GetMouseButtonUp(0) && mDragging) {
             mDragging = false;
             if (!GroundDetector.IsOnGround)
                 return;
+
+            if (mCurrentBar != null)
+                Destroy(mCurrentBar);
 
             Vector3 dir = Camera.main.ScreenToWorldPoint(Input.mousePosition) - mStartPosition;
             dir *= JumpScale;
@@ -45,7 +57,6 @@ public sealed class Player : MonoBehaviour
                 dir *= MaxJump;
             }
 
-            Debug.Log($"{dir.magnitude}");
             Rigidbody.AddForce(dir);
         }
     }

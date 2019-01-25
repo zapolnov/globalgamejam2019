@@ -9,14 +9,12 @@ public sealed class GroundDetector : MonoBehaviour
     //void OnCollisionEnter2D(Collision collision)
     void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log("Enter");
         ++mIsOnGround;
     }
 
     //void OnCollisionExit2D(Collision collision)
     void OnTriggerExit2D(Collider2D collider)
     {
-        Debug.Log("Exit");
         --mIsOnGround;
     }
 }
