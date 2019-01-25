@@ -1,3 +1,10 @@
 [Ll]ibrary/
 [Tt]emp/
 [Ll]ogs/
+/Assets/Plugins
+/Assets/Plugins.meta
+/.idea
+/obj
+*.csproj
+*.sln
+*.sln.DotSettings.user
