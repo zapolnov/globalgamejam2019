@@ -17,8 +17,10 @@ public class BouncingWall : MonoBehaviour
         }
 
         var newVelocity = new Vector2(-player.LastVelocity.x, player.LastVelocity.y);
-        if (newVelocity.y < 3.5f)
-            newVelocity.y = 3.5f;
+        if (newVelocity.y < 5.0f)
+            newVelocity.y = 5.0f;
+        if (newVelocity.x > 2.5f)
+            newVelocity.x = 2.5f;
         player.Rigidbody.velocity = newVelocity;
     }
 }
