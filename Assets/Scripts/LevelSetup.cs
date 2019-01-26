@@ -7,6 +7,11 @@ public sealed class LevelSetup : MonoBehaviour
     public GameObject LightBottom;
     public GameObject TopFloor;
 
+    void Awake()
+    {
+        LightTop.SetActive(true);
+    }
+
     void LateUpdate()
     {
         var cam = Camera.main;
