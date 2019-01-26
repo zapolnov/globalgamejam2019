@@ -5,6 +5,7 @@ public sealed class LevelSetup : MonoBehaviour
 {
     public GameObject LightTop;
     public GameObject LightBottom;
+    public GameObject TopFloor;
 
     void LateUpdate()
     {
@@ -14,6 +15,9 @@ public sealed class LevelSetup : MonoBehaviour
         float screenHeight = Mathf.Abs(bottom.y - top.y);
 
         Vector3 topPos = new Vector3(0.0f, top.y, 0.0f);
+        float maxY = TopFloor.transform.position.y;
+        if (topPos.y > maxY)
+            topPos.y = maxY;
         LightTop.transform.position = topPos;
 
         Vector3 bottomPos = new Vector3(0.0f, bottom.y, 0.0f);
