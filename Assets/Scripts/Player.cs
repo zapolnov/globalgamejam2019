@@ -6,8 +6,12 @@ public sealed class Player : MonoBehaviour
     public float MinJump = 10.0f;
     public float MaxJump = 50.0f;
     public float JumpScale = 10.0f;
+    public float RecoverTime = 3.0f;
+    public int Lives = 3;
 
+    public GameObject Visual;
     public GroundDetector GroundDetector;
+    public EnemyContactDetector EnemyContactDetector;
     public GameObject BarSpawnPoint;
     public GameObject BarPrefab;
 
@@ -16,6 +20,7 @@ public sealed class Player : MonoBehaviour
 
     private Vector3 mStartPosition;
     private GameObject mCurrentBar;
+    private float mRecoveringTimer;
     private bool mDragging;
 
     void Awake()
@@ -25,6 +30,22 @@ public sealed class Player : MonoBehaviour
 
     void Update()
     {
+        if (EnemyContactDetector.CollidesWithEnemy && mRecoveringTimer <= 0.0f)
+        {
+            mRecoveringTimer = RecoverTime;
+            --Lives;
+            if (Lives <= 0) {
+                // FIXME
+            }
+        }
+
+        if (mRecoveringTimer <= 0.0f)
+            Visual.SetActive(true);
+        else {
+            mRecoveringTimer -= Time.deltaTime;
+            Visual.SetActive(mRecoveringTimer % 0.5f < 0.25f);
+        }
+
         if (Input.GetMouseButtonDown(0)) {
             mStartPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (GroundDetector.IsOnGround)
