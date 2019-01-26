@@ -1298,10 +1298,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84316354259f2427a9ee412e93db9585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IgnoreInput: 0
   MinJump: 200
   MaxJump: 400
   JumpScale: 100
-  RecoverTime: 3
+  RecoverTime: 2
   DeathTime1: 1
   DeathTime2: 2
   DrawTime1: 0.2
