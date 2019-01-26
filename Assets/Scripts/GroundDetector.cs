@@ -8,14 +8,14 @@ public sealed class GroundDetector : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.tag == "Enemy")
+        if (collider.tag == "Enemy" || collider.tag == "JustTrigger")
             return;
         ++mIsOnGround;
     }
 
     void OnTriggerExit2D(Collider2D collider)
     {
-        if (collider.tag == "Enemy")
+        if (collider.tag == "Enemy" || collider.tag == "JustTrigger")
             return;
         --mIsOnGround;
     }
