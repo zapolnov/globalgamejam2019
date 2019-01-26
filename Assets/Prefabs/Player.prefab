@@ -679,7 +679,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.6}
+  m_Size: {x: 0.8, y: 0.6}
   m_EdgeRadius: 0
 --- !u!114 &7685094634255406092
 MonoBehaviour:
@@ -1215,7 +1215,7 @@ GameObject:
   - component: {fileID: 8483289971744063831}
   m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1321,18 +1321,18 @@ MonoBehaviour:
   BarSpawnPoint: {fileID: 8510713211456612513}
   BarPrefab: {fileID: 263060196001196769, guid: 9a219b872e51a44958c91a61c322f9f6,
     type: 3}
-  Idle1: {fileID: 412966883}
-  Idle2: {fileID: 650388385}
-  Jump1: {fileID: 663206346}
-  Jump2: {fileID: 1911025239}
-  Draw1: {fileID: 1656291547}
-  Draw2: {fileID: 857031268}
-  Attack1: {fileID: 1123259544914895286}
-  Attack2: {fileID: 9127038410214625139}
-  Death1: {fileID: 1239542504}
-  Death2: {fileID: 569354707}
-  BeingHit: {fileID: 880558689}
-  Landing: {fileID: 382561479}
+  Idle1: {fileID: 412966885}
+  Idle2: {fileID: 650388387}
+  Jump1: {fileID: 663206348}
+  Jump2: {fileID: 1911025241}
+  Draw1: {fileID: 1656291549}
+  Draw2: {fileID: 857031270}
+  Attack1: {fileID: 8528092645899658751}
+  Attack2: {fileID: 2111776628508133034}
+  Death1: {fileID: 1239542506}
+  Death2: {fileID: 569354709}
+  BeingHit: {fileID: 880558691}
+  Landing: {fileID: 382561481}
 --- !u!1 &9127038410214625139
 GameObject:
   m_ObjectHideFlags: 0

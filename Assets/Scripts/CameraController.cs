@@ -4,15 +4,15 @@ using UnityEngine;
 public sealed class CameraController : MonoBehaviour
 {
     public float Speed = 1.0f;
-    public Player Player;
+    public GameObject Target;
     public GameObject Floor;
 
     public void LateUpdate()
     {
         Vector3 position = transform.position;
 
-        float step = Player.transform.position.y - position.y;
-        float maxStep = Time.deltaTime * Speed;
+        float step = Target.transform.position.y - position.y;
+        float maxStep = Time.unscaledDeltaTime * Speed;
         if (Mathf.Abs(step) > Mathf.Abs(maxStep))
             step = maxStep * Mathf.Sign(step);
 

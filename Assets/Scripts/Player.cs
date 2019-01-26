@@ -20,6 +20,8 @@ public sealed class Player : MonoBehaviour
         Death2,
     }
 
+    public bool IgnoreInput;
+
     public float MinJump = 10.0f;
     public float MaxJump = 50.0f;
     public float JumpScale = 10.0f;
@@ -45,18 +47,18 @@ public sealed class Player : MonoBehaviour
     public GameObject BarPrefab;
 
     private VisualState mVisualState = VisualState.Idle1;
-    public GameObject Idle1;
-    public GameObject Idle2;
-    public GameObject Jump1;
-    public GameObject Jump2;
-    public GameObject Draw1;
-    public GameObject Draw2;
-    public GameObject Attack1;
-    public GameObject Attack2;
-    public GameObject Death1;
-    public GameObject Death2;
-    public GameObject BeingHit;
-    public GameObject Landing;
+    public SpriteRenderer Idle1;
+    public SpriteRenderer Idle2;
+    public SpriteRenderer Jump1;
+    public SpriteRenderer Jump2;
+    public SpriteRenderer Draw1;
+    public SpriteRenderer Draw2;
+    public SpriteRenderer Attack1;
+    public SpriteRenderer Attack2;
+    public SpriteRenderer Death1;
+    public SpriteRenderer Death2;
+    public SpriteRenderer BeingHit;
+    public SpriteRenderer Landing;
 
     public Vector2 LastVelocity { get; private set; }
     public Rigidbody2D Rigidbody { get; private set; }
@@ -133,6 +135,9 @@ public sealed class Player : MonoBehaviour
 
     void UpdateInputs()
     {
+        if (IgnoreInput)
+            return;
+
         if (mVisualState == VisualState.Jump1
             || mVisualState == VisualState.Draw1
             || mVisualState == VisualState.Draw2
@@ -195,6 +200,35 @@ public sealed class Player : MonoBehaviour
             UpdateInputs();
 
         UpdateVisual();
+    }
+
+    public void DestroyBar()
+    {
+        if (mCurrentBar != null)
+            Destroy(mCurrentBar);
+    }
+
+    public void SetAlpha(float alpha)
+    {
+        SetAlpha(Idle1, alpha);
+        SetAlpha(Idle2, alpha);
+        SetAlpha(Jump1, alpha);
+        SetAlpha(Jump2, alpha);
+        SetAlpha(Draw1, alpha);
+        SetAlpha(Draw2, alpha);
+        SetAlpha(Death1, alpha);
+        SetAlpha(Death2, alpha);
+        SetAlpha(BeingHit, alpha);
+        SetAlpha(Landing, alpha);
+        SetAlpha(Attack1, alpha);
+        SetAlpha(Attack2, alpha);
+    }
+
+    void SetAlpha(SpriteRenderer renderer, float alpha)
+    {
+        var color = renderer.color;
+        color.a = alpha;
+        renderer.color = color;
     }
 
     void AdjustScale(Transform t, float mult = 1.0f)
@@ -304,18 +338,18 @@ public sealed class Player : MonoBehaviour
                 break;
         }
 
-        Idle1.SetActive(mVisualState == VisualState.Idle1);
-        Idle2.SetActive(mVisualState == VisualState.Idle2);
-        Jump1.SetActive(mVisualState == VisualState.Jump1);
-        Jump2.SetActive(mVisualState == VisualState.Jump2);
-        Draw1.SetActive(mVisualState == VisualState.Draw1);
-        Draw2.SetActive(mVisualState == VisualState.Draw2);
-        Death1.SetActive(mVisualState == VisualState.Death1);
-        Death2.SetActive(mVisualState == VisualState.Death2);
-        BeingHit.SetActive(mVisualState == VisualState.BeingHit);
-        Landing.SetActive(mVisualState == VisualState.Landing);
-        Attack1.SetActive(mVisualState == VisualState.Attack1);
-        Attack2.SetActive(mVisualState == VisualState.Attack2);
+        Idle1.gameObject.SetActive(mVisualState == VisualState.Idle1);
+        Idle2.gameObject.SetActive(mVisualState == VisualState.Idle2);
+        Jump1.gameObject.SetActive(mVisualState == VisualState.Jump1);
+        Jump2.gameObject.SetActive(mVisualState == VisualState.Jump2);
+        Draw1.gameObject.SetActive(mVisualState == VisualState.Draw1);
+        Draw2.gameObject.SetActive(mVisualState == VisualState.Draw2);
+        Death1.gameObject.SetActive(mVisualState == VisualState.Death1);
+        Death2.gameObject.SetActive(mVisualState == VisualState.Death2);
+        BeingHit.gameObject.SetActive(mVisualState == VisualState.BeingHit);
+        Landing.gameObject.SetActive(mVisualState == VisualState.Landing);
+        Attack1.gameObject.SetActive(mVisualState == VisualState.Attack1);
+        Attack2.gameObject.SetActive(mVisualState == VisualState.Attack2);
 
         AdjustScale(Idle1.transform);
         AdjustScale(Idle2.transform);
