@@ -52,6 +52,7 @@ public sealed class Player : MonoBehaviour
     public SpriteRenderer Idle2;
     public SpriteRenderer Jump1;
     public SpriteRenderer Jump2;
+    public SpriteRenderer Fall;
     public SpriteRenderer Draw1;
     public SpriteRenderer Draw2;
     public SpriteRenderer Attack1;
@@ -220,6 +221,7 @@ public sealed class Player : MonoBehaviour
         SetAlpha(Idle2, alpha);
         SetAlpha(Jump1, alpha);
         SetAlpha(Jump2, alpha);
+        SetAlpha(Fall, alpha);
         SetAlpha(Draw1, alpha);
         SetAlpha(Draw2, alpha);
         SetAlpha(Death1, alpha);
@@ -250,6 +252,10 @@ public sealed class Player : MonoBehaviour
             mLookDirection = 1.0f;
         else if (LastVelocity.x > 0.0f)
             mLookDirection = -1.0f;
+
+        bool falling = false;
+        if (LastVelocity.y < 0.0f)
+            falling = true;
 
         switch (mVisualState) {
             case VisualState.Idle1:
@@ -347,7 +353,8 @@ public sealed class Player : MonoBehaviour
         Idle1.gameObject.SetActive(mVisualState == VisualState.Idle1);
         Idle2.gameObject.SetActive(mVisualState == VisualState.Idle2);
         Jump1.gameObject.SetActive(mVisualState == VisualState.Jump1);
-        Jump2.gameObject.SetActive(mVisualState == VisualState.Jump2);
+        Jump2.gameObject.SetActive(mVisualState == VisualState.Jump2 && !falling);
+        Fall.gameObject.SetActive(mVisualState == VisualState.Jump2 && falling);
         Draw1.gameObject.SetActive(mVisualState == VisualState.Draw1);
         Draw2.gameObject.SetActive(mVisualState == VisualState.Draw2);
         Death1.gameObject.SetActive(mVisualState == VisualState.Death1);
@@ -361,6 +368,7 @@ public sealed class Player : MonoBehaviour
         AdjustScale(Idle2.transform);
         AdjustScale(Jump1.transform);
         AdjustScale(Jump2.transform);
+        AdjustScale(Fall.transform);
         AdjustScale(Death1.transform, -1.0f);
         AdjustScale(Death2.transform);
         AdjustScale(BeingHit.transform, -1.0f);
