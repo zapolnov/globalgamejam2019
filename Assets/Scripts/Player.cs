@@ -242,6 +242,7 @@ public sealed class Player : MonoBehaviour
 
             case VisualState.Draw1:
                 Rigidbody.velocity = new Vector2(0.0f, 0.0f);
+                Visual.SetActive(true);
                 mDrawTimer -= Time.unscaledDeltaTime;
                 if (mDrawTimer <= 0.0f) {
                     mVisualState = VisualState.Draw2;
@@ -251,6 +252,8 @@ public sealed class Player : MonoBehaviour
                 break;
 
             case VisualState.Draw2:
+                Rigidbody.velocity = new Vector2(0.0f, 0.0f);
+                Visual.SetActive(true);
                 mDrawTimer -= Time.unscaledDeltaTime;
                 if (mDrawTimer <= 0.0f)
                     mVisualState = VisualState.Idle1;
@@ -258,6 +261,7 @@ public sealed class Player : MonoBehaviour
 
             case VisualState.Attack1:
                 Rigidbody.velocity = new Vector2(0.0f, 0.0f);
+                Visual.SetActive(true);
                 mAttackTimer -= Time.unscaledDeltaTime;
                 if (mAttackTimer <= 0.0f) {
                     mVisualState = VisualState.Attack2;
@@ -267,6 +271,7 @@ public sealed class Player : MonoBehaviour
 
             case VisualState.Attack2:
                 Rigidbody.velocity = new Vector2(0.0f, 0.0f);
+                Visual.SetActive(true);
                 mAttackTimer -= Time.unscaledDeltaTime;
                 if (mAttackTimer <= 0.0f)
                     mVisualState = VisualState.Jump2;

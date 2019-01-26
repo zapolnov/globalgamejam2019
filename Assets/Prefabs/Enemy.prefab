@@ -680,7 +680,7 @@ MonoBehaviour:
   KillPoint: {fileID: 2861207709447289710}
   Speed: 0.01
   WaitTime: 1
-  DeathAnimationTime: 2
+  DeathAnimationTime: 0.5
   MovesRight: 1
   Walk1: {fileID: 1931819200}
   Walk2: {fileID: 1209348530}
