@@ -28,8 +28,8 @@ public sealed class Enemy : MonoBehaviour
         collider.enabled = false;
         collider.tag = "DeadEnemy";
         collider.enabled = true;
-        Destroy(LeftGroundDetector);
-        Destroy(RightGroundDetector);
+        Destroy(LeftGroundDetector.gameObject);
+        Destroy(RightGroundDetector.gameObject);
         Destroy(Trigger);
         mDead = true;
         mDeathAnimationTimer = DeathAnimationTime;
