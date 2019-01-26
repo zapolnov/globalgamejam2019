@@ -271,7 +271,7 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -317,6 +317,7 @@ MonoBehaviour:
   MaxJump: 400
   JumpScale: 100
   RecoverTime: 3
+  DeathTime: 1
   Lives: 3
   Visual: {fileID: 8483289971566566659}
   GroundDetector: {fileID: 8483289971239492813}
