@@ -1150,7 +1150,7 @@ MonoBehaviour:
   MaxJump: 400
   JumpScale: 100
   RecoverTime: 3
-  DeathTime1: 0.3
+  DeathTime1: 1
   DeathTime2: 2
   DrawTime1: 0.2
   DrawTime2: 0.2
