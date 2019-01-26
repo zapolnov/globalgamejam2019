@@ -10,7 +10,19 @@ public sealed class Enemy : MonoBehaviour
     public float WaitTime = 1.0f;
     public bool MovesRight;
 
+    public GameObject Walk1;
+    public GameObject Walk2;
+    public GameObject Death1;
+
     private float mWaiting;
+    private bool mDead;
+
+    void AdjustScale(Transform t, float mult = 1.0f)
+    {
+        var scale = t.localScale;
+        scale.x = (MovesRight ? 1.0f : -1.0f) * mult;
+        t.localScale = scale;
+    }
 
     void Update()
     {
@@ -20,7 +32,7 @@ public sealed class Enemy : MonoBehaviour
                 return;
         }
 
-        if (LeftGroundDetector.IsOnGround || RightGroundDetector.IsOnGround) {
+        if (!mDead && (LeftGroundDetector.IsOnGround || RightGroundDetector.IsOnGround)) {
             if (!LeftGroundDetector.IsOnGround && !MovesRight) {
                 MovesRight = true;
                 mWaiting = WaitTime;
@@ -33,5 +45,13 @@ public sealed class Enemy : MonoBehaviour
                 transform.position = pos;
             }
         }
+
+        Walk1.SetActive(!mDead && Time.timeSinceLevelLoad % 1.0f < 0.5f);
+        Walk2.SetActive(!mDead && Time.timeSinceLevelLoad % 1.0f >= 0.5f);
+        Death1.SetActive(mDead);
+
+        AdjustScale(Walk1.transform);
+        AdjustScale(Walk2.transform);
+        AdjustScale(Death1.transform);
     }
 }
