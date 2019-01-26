@@ -1,6 +1,7 @@
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public sealed class Player : MonoBehaviour
 {
@@ -128,7 +129,7 @@ public sealed class Player : MonoBehaviour
         if (mRecoveringTimer <= 0.0f)
             Visual.SetActive(true);
         else {
-            mRecoveringTimer -= Time.unscaledDeltaTime;
+            mRecoveringTimer -= TimeManager.unscaledDeltaTime;
             Visual.SetActive(mRecoveringTimer % 0.5f >= 0.25f);
         }
     }
@@ -146,6 +147,11 @@ public sealed class Player : MonoBehaviour
             || mVisualState == VisualState.BeingHit
             || mVisualState == VisualState.Death1
             || mVisualState == VisualState.Death2)
+            return;
+
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
+        if (TimeManager.IsPaused)
             return;
 
         if (Input.GetMouseButtonDown(0)) {
@@ -248,7 +254,7 @@ public sealed class Player : MonoBehaviour
         switch (mVisualState) {
             case VisualState.Idle1:
             case VisualState.Idle2:
-                 mIdleTimer -= Time.deltaTime;
+                 mIdleTimer -= TimeManager.deltaTime;
                  if (mIdleTimer <= 0.0f) {
                     mIdleTimer += IdleSwitchTime;
                     mVisualState = mVisualState == VisualState.Idle1 ? VisualState.Idle2 : VisualState.Idle1;
@@ -258,7 +264,7 @@ public sealed class Player : MonoBehaviour
                  break;
 
             case VisualState.Jump1:
-                mJumpAnticipationTimer -= Time.unscaledDeltaTime;
+                mJumpAnticipationTimer -= TimeManager.unscaledDeltaTime;
                 if (mJumpAnticipationTimer <= 0.0f) {
                     mVisualState = VisualState.Jump2;
                     Rigidbody.AddForce(mJumpDirection);
@@ -277,7 +283,7 @@ public sealed class Player : MonoBehaviour
             case VisualState.Draw1:
                 Rigidbody.velocity = new Vector2(0.0f, 0.0f);
                 Visual.SetActive(true);
-                mDrawTimer -= Time.unscaledDeltaTime;
+                mDrawTimer -= TimeManager.unscaledDeltaTime;
                 if (mDrawTimer <= 0.0f) {
                     mVisualState = VisualState.Draw2;
                     mDrawTimer = DrawTime2;
@@ -288,7 +294,7 @@ public sealed class Player : MonoBehaviour
             case VisualState.Draw2:
                 Rigidbody.velocity = new Vector2(0.0f, 0.0f);
                 Visual.SetActive(true);
-                mDrawTimer -= Time.unscaledDeltaTime;
+                mDrawTimer -= TimeManager.unscaledDeltaTime;
                 if (mDrawTimer <= 0.0f)
                     mVisualState = VisualState.Idle1;
                 break;
@@ -296,7 +302,7 @@ public sealed class Player : MonoBehaviour
             case VisualState.Attack1:
                 Rigidbody.velocity = new Vector2(0.0f, 0.0f);
                 Visual.SetActive(true);
-                mAttackTimer -= Time.unscaledDeltaTime;
+                mAttackTimer -= TimeManager.unscaledDeltaTime;
                 if (mAttackTimer <= 0.0f) {
                     mVisualState = VisualState.Attack2;
                     mAttackTimer = AttackTime2;
@@ -306,25 +312,25 @@ public sealed class Player : MonoBehaviour
             case VisualState.Attack2:
                 Rigidbody.velocity = new Vector2(0.0f, 0.0f);
                 Visual.SetActive(true);
-                mAttackTimer -= Time.unscaledDeltaTime;
+                mAttackTimer -= TimeManager.unscaledDeltaTime;
                 if (mAttackTimer <= 0.0f)
                     mVisualState = VisualState.Jump2;
                 break;
 
             case VisualState.BeingHit:
-                mBeingHitTimer -= Time.unscaledDeltaTime;
+                mBeingHitTimer -= TimeManager.unscaledDeltaTime;
                 if (mBeingHitTimer <= 0.0f)
                     mVisualState = VisualState.Idle1;
                 break;
 
             case VisualState.Landing:
-                mLandingTimer -= Time.unscaledDeltaTime;
+                mLandingTimer -= TimeManager.unscaledDeltaTime;
                 if (mLandingTimer <= 0.0f)
                     mVisualState = VisualState.Idle1;
                 break;
 
             case VisualState.Death1:
-                mDeathTimer -= Time.unscaledDeltaTime;
+                mDeathTimer -= TimeManager.unscaledDeltaTime;
                 if (mDeathTimer <= 0.0f) {
                     mDeathTimer = DeathTime2;
                     mVisualState = VisualState.Death2;
@@ -332,7 +338,7 @@ public sealed class Player : MonoBehaviour
                 break;
 
             case VisualState.Death2:
-                mDeathTimer -= Time.unscaledDeltaTime;
+                mDeathTimer -= TimeManager.unscaledDeltaTime;
                 if (mDeathTimer <= 0.0f)
                     SceneManager.LoadScene("GameOver");
                 break;

@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.UI;
 
 public sealed class HomeSweetHome : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public sealed class HomeSweetHome : MonoBehaviour
     public Player Player;
     public CameraController CameraController;
     public GameObject CameraTarget;
+    public Button PauseButton;
+    public Button PlayAgainButton;
 
     public float TransitionTime = 0.5f;
 
@@ -19,13 +22,14 @@ public sealed class HomeSweetHome : MonoBehaviour
         if (!mTransitioning)
             return;
 
-        mTransitionTime += Time.unscaledDeltaTime;
+        mTransitionTime += TimeManager.unscaledDeltaTime;
         if (mTransitionTime >= TransitionTime) {
             Time.timeScale = 1.0f;
             mTransitioning = false;
             Full.gameObject.SetActive(true);
             Empty.gameObject.SetActive(false);
             Player.gameObject.SetActive(false);
+            PlayAgainButton.gameObject.SetActive(true);
         } else {
             Time.timeScale = 0.0f;
             Full.gameObject.SetActive(true);
@@ -51,6 +55,8 @@ public sealed class HomeSweetHome : MonoBehaviour
             CameraController.Target = CameraTarget;
             CameraController.Speed = 4.0f;
             Player.IgnoreInput = true;
+            PauseButton.gameObject.SetActive(false);
+            PlayAgainButton.gameObject.SetActive(false);
         }
     }
 }

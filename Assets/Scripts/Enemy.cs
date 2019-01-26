@@ -48,7 +48,7 @@ public sealed class Enemy : MonoBehaviour
             if (mDeathAnimationTimer > 0.0f) {
                 Death1.SetActive(true);
                 Death2.SetActive(false);
-                mDeathAnimationTimer -= Time.deltaTime;
+                mDeathAnimationTimer -= TimeManager.deltaTime;
                 if (mDeathAnimationTimer > 0.0f)
                     return;
             }
@@ -57,7 +57,7 @@ public sealed class Enemy : MonoBehaviour
             Death2.SetActive(true);
         } else {
             if (mWaiting > 0.0f) {
-                mWaiting -= Time.deltaTime;
+                mWaiting -= TimeManager.deltaTime;
                 if (mWaiting > 0.0f)
                     return;
             }
@@ -71,7 +71,7 @@ public sealed class Enemy : MonoBehaviour
                     mWaiting = WaitTime;
                 } else {
                     Vector3 pos = transform.position;
-                    pos.x += (MovesRight ? Speed : -Speed) * Time.deltaTime * 60.0f;
+                    pos.x += (MovesRight ? Speed : -Speed) * TimeManager.deltaTime * 60.0f;
                     transform.position = pos;
                 }
             }
@@ -80,8 +80,8 @@ public sealed class Enemy : MonoBehaviour
             Death2.SetActive(false);
         }
 
-        Walk1.SetActive(!mDead && Time.timeSinceLevelLoad % 1.0f < 0.5f);
-        Walk2.SetActive(!mDead && Time.timeSinceLevelLoad % 1.0f >= 0.5f);
+        Walk1.SetActive(!mDead && TimeManager.timeSinceLevelLoad % 1.0f < 0.5f);
+        Walk2.SetActive(!mDead && TimeManager.timeSinceLevelLoad % 1.0f >= 0.5f);
 
         AdjustScale(Walk1.transform);
         AdjustScale(Walk2.transform);
