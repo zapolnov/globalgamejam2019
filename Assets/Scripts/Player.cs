@@ -1,5 +1,6 @@
 ﻿
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public sealed class Player : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public sealed class Player : MonoBehaviour
     public float MaxJump = 50.0f;
     public float JumpScale = 10.0f;
     public float RecoverTime = 3.0f;
+    public float DeathTime = 1.0f;
     public int Lives = 3;
 
     public GameObject Visual;
@@ -30,21 +32,31 @@ public sealed class Player : MonoBehaviour
 
     void Update()
     {
-        if (EnemyContactDetector.CollidesWithEnemy && mRecoveringTimer <= 0.0f)
+        if (EnemyContactDetector.CollidesWithEnemy && mRecoveringTimer <= 0.0f && Lives > 0)
         {
-            mRecoveringTimer = RecoverTime;
             --Lives;
-            if (Lives <= 0) {
-                // FIXME
+            if (Lives > 0)
+                mRecoveringTimer = RecoverTime;
+            else {
+                Time.timeScale = 0.0f;
+                mRecoveringTimer = DeathTime;
             }
         }
 
-        if (mRecoveringTimer <= 0.0f)
+        if (mRecoveringTimer <= 0.0f) {
             Visual.SetActive(true);
-        else {
-            mRecoveringTimer -= Time.deltaTime;
+            if (Lives <= 0) {
+                Time.timeScale = 1.0f;
+                SceneManager.LoadScene("GameOver");
+                return;
+            }
+        } else {
+            mRecoveringTimer -= Time.unscaledDeltaTime;
             Visual.SetActive(mRecoveringTimer % 0.5f < 0.25f);
         }
+
+        if (Lives <= 0)
+            return;
 
         if (Input.GetMouseButtonDown(0)) {
             mStartPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

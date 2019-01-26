@@ -29,7 +29,7 @@ public sealed class Enemy : MonoBehaviour
                 mWaiting = WaitTime;
             } else {
                 Vector3 pos = transform.position;
-                pos.x += (MovesRight ? Speed : -Speed);
+                pos.x += (MovesRight ? Speed : -Speed) * Time.deltaTime * 60.0f;
                 transform.position = pos;
             }
         }
