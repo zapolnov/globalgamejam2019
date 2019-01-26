@@ -14,6 +14,8 @@ public sealed class Player : MonoBehaviour
         BeingHit,
         Draw1,
         Draw2,
+        Attack1,
+        Attack2,
         Death1,
         Death2,
     }
@@ -26,6 +28,8 @@ public sealed class Player : MonoBehaviour
     public float DeathTime2 = 3.0f;
     public float DrawTime1 = 0.1f;
     public float DrawTime2 = 0.1f;
+    public float AttackTime1 = 0.1f;
+    public float AttackTime2 = 0.1f;
     public float IdleSwitchTime = 0.5f;
     public float JumpAnticipationTime = 0.2f;
     public float DeathAnticipationTime = 0.3f;
@@ -36,6 +40,7 @@ public sealed class Player : MonoBehaviour
     public GameObject Visual;
     public GroundDetector GroundDetector;
     public EnemyContactDetector EnemyContactDetector;
+    public EnemyBeneathDetector EnemyBeneathDetector;
     public GameObject BarSpawnPoint;
     public GameObject BarPrefab;
 
@@ -46,6 +51,8 @@ public sealed class Player : MonoBehaviour
     public GameObject Jump2;
     public GameObject Draw1;
     public GameObject Draw2;
+    public GameObject Attack1;
+    public GameObject Attack2;
     public GameObject Death1;
     public GameObject Death2;
     public GameObject BeingHit;
@@ -63,6 +70,7 @@ public sealed class Player : MonoBehaviour
     private float mDeathTimer;
     private float mBeingHitTimer;
     private float mLandingTimer;
+    private float mAttackTimer;
     private Vector2 mJumpDirection;
     private float mLookDirection = 1.0f;
     private bool mDragging;
@@ -79,6 +87,16 @@ public sealed class Player : MonoBehaviour
 
     void UpdateLives()
     {
+        if (mVisualState == VisualState.Jump1
+            || mVisualState == VisualState.Draw1
+            || mVisualState == VisualState.Draw2
+            || mVisualState == VisualState.Attack1
+            || mVisualState == VisualState.Attack2
+            || mVisualState == VisualState.BeingHit
+            || mVisualState == VisualState.Death1
+            || mVisualState == VisualState.Death2)
+            return;
+
         if (EnemyContactDetector.CollidesWithEnemy && mRecoveringTimer <= 0.0f && Lives > 0)
         {
             Vector2 dir;
@@ -118,6 +136,8 @@ public sealed class Player : MonoBehaviour
         if (mVisualState == VisualState.Jump1
             || mVisualState == VisualState.Draw1
             || mVisualState == VisualState.Draw2
+            || mVisualState == VisualState.Attack1
+            || mVisualState == VisualState.Attack2
             || mVisualState == VisualState.BeingHit
             || mVisualState == VisualState.Death1
             || mVisualState == VisualState.Death2)
@@ -127,7 +147,13 @@ public sealed class Player : MonoBehaviour
             mStartPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (GroundDetector.IsOnGround)
                 mDragging = true;
-            else {
+            else if (EnemyBeneathDetector.HasEnemyBeneath) {
+                Vector2 delta = transform.position - BarSpawnPoint.transform.position;
+                transform.position = EnemyBeneathDetector.GetKillPoint() + delta;
+                EnemyBeneathDetector.KillCollidingEnemies();
+                mAttackTimer = AttackTime1;
+                mVisualState = VisualState.Attack1;
+            } else {
                 if (mCurrentBar != null)
                     Destroy(mCurrentBar);
                 mDrawTimer = DrawTime1;
@@ -230,6 +256,22 @@ public sealed class Player : MonoBehaviour
                     mVisualState = VisualState.Idle1;
                 break;
 
+            case VisualState.Attack1:
+                Rigidbody.velocity = new Vector2(0.0f, 0.0f);
+                mAttackTimer -= Time.unscaledDeltaTime;
+                if (mAttackTimer <= 0.0f) {
+                    mVisualState = VisualState.Attack2;
+                    mAttackTimer = AttackTime2;
+                }
+                break;
+
+            case VisualState.Attack2:
+                Rigidbody.velocity = new Vector2(0.0f, 0.0f);
+                mAttackTimer -= Time.unscaledDeltaTime;
+                if (mAttackTimer <= 0.0f)
+                    mVisualState = VisualState.Jump2;
+                break;
+
             case VisualState.BeingHit:
                 mBeingHitTimer -= Time.unscaledDeltaTime;
                 if (mBeingHitTimer <= 0.0f)
@@ -267,6 +309,8 @@ public sealed class Player : MonoBehaviour
         Death2.SetActive(mVisualState == VisualState.Death2);
         BeingHit.SetActive(mVisualState == VisualState.BeingHit);
         Landing.SetActive(mVisualState == VisualState.Landing);
+        Attack1.SetActive(mVisualState == VisualState.Attack1);
+        Attack2.SetActive(mVisualState == VisualState.Attack2);
 
         AdjustScale(Idle1.transform);
         AdjustScale(Idle2.transform);
