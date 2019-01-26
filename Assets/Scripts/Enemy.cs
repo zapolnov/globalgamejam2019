@@ -33,6 +33,10 @@ public sealed class Enemy : MonoBehaviour
         Destroy(Trigger);
         mDead = true;
         mDeathAnimationTimer = DeathAnimationTime;
+        Walk1.SetActive(false);
+        Walk2.SetActive(false);
+        Death1.SetActive(true);
+        Death2.SetActive(false);
     }
 
     void AdjustScale(Transform t, float mult = 1.0f)
