@@ -1,16 +1,17 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public sealed class CoinCounter : MonoBehaviour
 {
     public Player Player;
 
-    private Text mText;
+    private TextMeshProUGUI mText;
 
     void Awake()
     {
-        mText = GetComponent<Text>();
+        mText = GetComponent<TextMeshProUGUI>();
     }
 
     void Update()

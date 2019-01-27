@@ -57,6 +57,7 @@ public sealed class HomeSweetHome : MonoBehaviour
             Player.IgnoreInput = true;
             PauseButton.gameObject.SetActive(false);
             PlayAgainButton.gameObject.SetActive(false);
+            SoundManager.Instance.SetMusic(SoundManager.AudioTrack.Win);
         }
     }
 }
