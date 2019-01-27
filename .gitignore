@@ -4,6 +4,7 @@
 /Assets/Plugins
 /Assets/Plugins.meta
 /.idea
+/.gradle
 /obj
 *.csproj
 *.sln
