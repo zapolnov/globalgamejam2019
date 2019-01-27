@@ -160,8 +160,8 @@ public sealed class Player : MonoBehaviour
             || mVisualState == VisualState.Death2)
             return;
 
-        if (EventSystem.current.IsPointerOverGameObject())
-            return;
+        //if (EventSystem.current.IsPointerOverGameObject())
+        //    return;
         if (TimeManager.IsPaused)
             return;
 
