@@ -18,7 +18,7 @@ public sealed class Fireball : MonoBehaviour
         }
 
         Vector3 scale = transform.localScale;
-        scale.x = (MovesRight ? 1.0f : -1.0f);
+        scale.x = (MovesRight ? -1.0f : 1.0f);
         transform.localScale = scale;
     }
 }

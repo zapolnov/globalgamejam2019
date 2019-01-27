@@ -45,7 +45,7 @@ public sealed class Enemy : MonoBehaviour
     void AdjustScale(Transform t, float mult = 1.0f)
     {
         var scale = t.localScale;
-        scale.x = (MovesRight ? 1.0f : -1.0f) * mult;
+        scale.x = (MovesRight ? 0.5f : -0.5f) * mult;
         t.localScale = scale;
     }
 

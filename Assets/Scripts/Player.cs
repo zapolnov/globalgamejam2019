@@ -255,7 +255,7 @@ public sealed class Player : MonoBehaviour
     void AdjustScale(Transform t, float mult = 1.0f)
     {
         var scale = t.localScale;
-        scale.x = mLookDirection * mult;
+        scale.x = mLookDirection * mult * 0.5f;
         t.localScale = scale;
     }
 
