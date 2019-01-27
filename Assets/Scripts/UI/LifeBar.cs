@@ -21,8 +21,8 @@ public sealed class LifeBar : MonoBehaviour
             rt.anchorMin = new Vector2(1, 0);
             rt.anchorMax = new Vector2(1, 1);
             rt.pivot = new Vector2(1, 0.5f);
-            rt.offsetMin = new Vector2(-60.0f * (Lives.Count + 1), 5.0f);
-            rt.offsetMax = new Vector2(-5.0f - 60.0f * (Lives.Count), -5.0f);
+            rt.offsetMin = new Vector2(-5.0f + -40.0f * (Lives.Count + 1), 0.0f);
+            rt.offsetMax = rt.offsetMin + new Vector2(50.0f, 0.0f);
             Lives.Push(image);
         }
 

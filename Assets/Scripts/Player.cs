@@ -39,6 +39,7 @@ public sealed class Player : MonoBehaviour
     public float DeathAnticipationTime = 0.3f;
     public float BeingHitTime = 0.5f;
     public float LandingTime = 0.15f;
+    public int MaxLives = 5;
     public int Lives = 3;
 
     public GameObject Visual;

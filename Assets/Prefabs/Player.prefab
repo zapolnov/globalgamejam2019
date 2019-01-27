@@ -1300,6 +1300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IgnoreInput: 0
+  CoinsCollected: 0
   MinJump: 200
   MaxJump: 400
   JumpScale: 100
@@ -1315,6 +1316,7 @@ MonoBehaviour:
   DeathAnticipationTime: 0.3
   BeingHitTime: 0.5
   LandingTime: 0.15
+  MaxLives: 6
   Lives: 3
   Visual: {fileID: 8483289971566566659}
   GroundDetector: {fileID: 8483289971239492813}
