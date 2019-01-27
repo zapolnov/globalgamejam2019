@@ -22,6 +22,7 @@ public sealed class Player : MonoBehaviour
     }
 
     public bool IgnoreInput;
+    public int CoinsCollected;
 
     public float MinJump = 10.0f;
     public float MaxJump = 50.0f;
