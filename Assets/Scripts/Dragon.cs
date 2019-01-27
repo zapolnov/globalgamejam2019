@@ -29,6 +29,9 @@ public sealed class Dragon : MonoBehaviour
 
     private Vector3 mInitialPosition;
 
+    public AudioClip ShotSound;
+    public AudioClip LaserSound; 
+
     private State mState = State.Init;
     private float mTimeLeft;
     private int mShotsLeft;
@@ -45,11 +48,18 @@ public sealed class Dragon : MonoBehaviour
         mState = State.Shoot;
         mTimeLeft = ShootTime;
 
-        if (LaserShoot)
+        var viewportPoint = Camera.main.WorldToViewportPoint(transform.position);
+        bool visibleOnScreen = viewportPoint.y > -0.3f && viewportPoint.y < 1.3f;
+
+        if (LaserShoot) {
             Laser.SetActive(true);
-        else {
+            if (visibleOnScreen)
+                SoundManager.Instance.PlaySound(LaserSound);
+        } else {
             var fireball = Instantiate(FireballPrefab.gameObject, FireballSpawn.position, Quaternion.identity);
             fireball.GetComponent<Fireball>().MovesRight = MovesRight;
+            if (visibleOnScreen)
+                SoundManager.Instance.PlaySound(ShotSound);
         }
 
         --mShotsLeft;

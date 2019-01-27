@@ -600,6 +600,8 @@ MonoBehaviour:
     type: 3}
   FireballSpawn: {fileID: 6499672911681587708}
   Laser: {fileID: 3752706855089308155}
+  ShotSound: {fileID: 8300000, guid: 847b51c25e4854c0d861d995e6ce26ea, type: 3}
+  LaserSound: {fileID: 8300000, guid: 94cc0664d3f894e5f8b64f72fd79b158, type: 3}
 --- !u!61 &6499672913312893557
 BoxCollider2D:
   m_ObjectHideFlags: 0

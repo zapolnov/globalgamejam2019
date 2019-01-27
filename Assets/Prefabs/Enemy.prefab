@@ -686,3 +686,4 @@ MonoBehaviour:
   Walk2: {fileID: 1209348530}
   Death1: {fileID: 973007877}
   Death2: {fileID: 6989366551438666416}
+  DeathSound: {fileID: 8300000, guid: 4868619ec527f4d3dad50595a13677b0, type: 3}

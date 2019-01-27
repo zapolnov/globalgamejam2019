@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using UnityEngine;
 
 public sealed class SoundManager : MonoBehaviour
@@ -19,6 +20,7 @@ public sealed class SoundManager : MonoBehaviour
     public AudioSource WinMusic;
 
     private AudioTrack mCurrentMusic = AudioTrack.None;
+    private readonly List<AudioSource> mSources = new List<AudioSource>();
 
     void Awake()
     {
@@ -29,6 +31,18 @@ public sealed class SoundManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             SetMusic(Music);
+        }
+    }
+
+    void Update()
+    {
+        int n = mSources.Count;
+        while (n-- > 0) {
+            var source = mSources[n];
+            if (!source.isPlaying) {
+                mSources.RemoveAt(n);
+                Destroy(source);
+            }
         }
     }
 
@@ -46,5 +60,12 @@ public sealed class SoundManager : MonoBehaviour
                 case AudioTrack.Win: WinMusic.Play(); break;
             }
         }
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        var source = gameObject.AddComponent<AudioSource>();
+        source.PlayOneShot(clip);
+        mSources.Add(source);
     }
 }

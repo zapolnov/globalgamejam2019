@@ -1338,6 +1338,11 @@ MonoBehaviour:
   Death2: {fileID: 569354709}
   BeingHit: {fileID: 880558691}
   Landing: {fileID: 382561481}
+  JumpUpSound: {fileID: 8300000, guid: fb77b43ad48bf4cceb7b901b00e19868, type: 3}
+  JumpDownSound: {fileID: 8300000, guid: b9cd439abc70d4c46b809c171322162b, type: 3}
+  DeathSound: {fileID: 8300000, guid: 80fb29c73a41249df9d506b274be105f, type: 3}
+  PainSound: {fileID: 8300000, guid: 866cd334d34df414fb88b4a28c5f263a, type: 3}
+  ScratchSound: {fileID: 8300000, guid: 73024555d682445e39c6a3e1a8f1115e, type: 3}
 --- !u!1 &8600163891432860070
 GameObject:
   m_ObjectHideFlags: 0

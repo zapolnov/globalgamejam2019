@@ -18,6 +18,8 @@ public sealed class Enemy : MonoBehaviour
     public GameObject Death1;
     public GameObject Death2;
 
+    public AudioClip DeathSound;
+
     private float mWaiting;
     private float mDeathAnimationTimer;
     private bool mDead;
@@ -37,6 +39,7 @@ public sealed class Enemy : MonoBehaviour
         Walk2.SetActive(false);
         Death1.SetActive(true);
         Death2.SetActive(false);
+        SoundManager.Instance.PlaySound(DeathSound);
     }
 
     void AdjustScale(Transform t, float mult = 1.0f)

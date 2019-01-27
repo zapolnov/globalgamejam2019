@@ -67,6 +67,12 @@ public sealed class Player : MonoBehaviour
     public Vector2 LastVelocity { get; private set; }
     public Rigidbody2D Rigidbody { get; private set; }
 
+    public AudioClip JumpUpSound;
+    public AudioClip JumpDownSound;
+    public AudioClip DeathSound;
+    public AudioClip PainSound;
+    public AudioClip ScratchSound;
+
     private Vector3 mStartPosition;
     private GameObject mCurrentBar;
     private float mRecoveringTimer;
@@ -123,9 +129,11 @@ public sealed class Player : MonoBehaviour
                 mRecoveringTimer = RecoverTime;
                 mVisualState = VisualState.BeingHit;
                 mBeingHitTimer = BeingHitTime;
+                SoundManager.Instance.PlaySound(PainSound); 
             } else {
                 mVisualState = VisualState.Death1;
                 mDeathTimer = DeathTime1;
+                SoundManager.Instance.PlaySound(DeathSound); 
             }
         }
 
@@ -167,11 +175,13 @@ public sealed class Player : MonoBehaviour
                 EnemyBeneathDetector.KillCollidingEnemies();
                 mAttackTimer = AttackTime1;
                 mVisualState = VisualState.Attack1;
+                //SoundManager.Instance.PlaySound(ScratchSound); 
             } else {
                 if (mCurrentBar != null)
                     Destroy(mCurrentBar);
                 mDrawTimer = DrawTime1;
                 mVisualState = VisualState.Draw1;
+                SoundManager.Instance.PlaySound(ScratchSound); 
             }
         } else if (Input.GetMouseButtonUp(0) && mDragging) {
             mDragging = false;
@@ -197,7 +207,8 @@ public sealed class Player : MonoBehaviour
 
             mVisualState = VisualState.Jump1;
             mJumpAnticipationTimer = JumpAnticipationTime;
-            mJumpDirection = dir; 
+            mJumpDirection = dir;
+            SoundManager.Instance.PlaySound(JumpUpSound); 
         }
     }
 
@@ -285,6 +296,7 @@ public sealed class Player : MonoBehaviour
                 if (GroundDetector.IsOnGround) {
                     mVisualState = VisualState.Landing;
                     mLandingTimer = LandingTime;
+                    SoundManager.Instance.PlaySound(JumpDownSound); 
                 }
                 break;
 
