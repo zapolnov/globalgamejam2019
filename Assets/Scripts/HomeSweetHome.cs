@@ -11,11 +11,31 @@ public sealed class HomeSweetHome : MonoBehaviour
     public GameObject CameraTarget;
     public Button PauseButton;
     public Button PlayAgainButton;
+    public SpriteRenderer Moon;
 
     public float TransitionTime = 0.5f;
 
+    private Vector3 mMoonInitialPosition;
     private bool mTransitioning;
     private float mTransitionTime;
+
+    void Awake()
+    {
+        mMoonInitialPosition = Moon.transform.position;
+    }
+
+    void LateUpdate()
+    {
+        var cam = Camera.main;
+        Vector3 top = cam.ScreenToWorldPoint(new Vector3(0.0f, cam.pixelHeight, cam.nearClipPlane));
+        Vector3 bottom = cam.ScreenToWorldPoint(new Vector3(0.0f, 0.0f, cam.nearClipPlane));
+        float screenHeight = Mathf.Abs(bottom.y - top.y);
+
+        Vector3 moonPos = new Vector3(top.x, top.y, 0.0f);
+        if (moonPos.y < mMoonInitialPosition.y)
+            moonPos.y = mMoonInitialPosition.y;
+        Moon.transform.position = moonPos;
+    }
 
     void Update()
     {
